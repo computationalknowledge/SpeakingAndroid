@@ -98,19 +98,26 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 /////  Project-Level build.gradle
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
+// Project-level build.gradle.kts
+
+// Project-level build.gradle.kts
+
 buildscript {
-    ext.kotlin_version = "1.5.31"
+    // Define repositories
     repositories {
         google()
         mavenCentral()
     }
+
+    // Define dependencies
     dependencies {
         classpath("com.android.tools.build:gradle:4.2.2")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31")
         classpath("com.google.gms:google-services:4.3.10")
     }
 }
 
+// Configure allprojects
 allprojects {
     repositories {
         google()
@@ -118,9 +125,15 @@ allprojects {
     }
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+// Define additional tasks
+tasks.register("clean", Delete::class) {
+    delete(rootProject.buildDir)
 }
+
+// Defining extra properties
+extra["kotlin_version"] = "1.5.31"
+
+
 
 
 
@@ -167,6 +180,23 @@ This setup should work together to create an app that integrates Google Maps and
 
 
 
+In the context of a build.gradle (Gradle build script), whether written in Groovy or Kotlin DSL, specifying repositories with google() and mavenCentral() 
+serves a crucial role in your project's dependency management. 
+
+Here's what each of these directives does:
+google()
+
+The google() repository is a shorthand for adding Google's Maven repository to your build script.
+It is primarily used to fetch dependencies that are hosted on Google's Maven repository. This includes many of the Android-specific libraries and tools, such as the Android SDK, Android Jetpack components, and more.
+For most Android projects, having Google's repository is essential because many Android dependencies are exclusively hosted there.
+
+mavenCentral()
+The mavenCentral() repository points to the Maven Central repository, one of the largest and oldest public repositories for Java and Kotlin libraries.
+It hosts a vast range of dependencies not limited to Android development. Many third-party libraries, whether they're used for Android or general Java/Kotlin projects, are hosted on Maven Central.
+By including Maven Central, you ensure that your project can fetch any library or tool that's available in this extensive repository.
+In Summary
+By declaring these two repositories in your Gradle build script, you tell Gradle where to look for the libraries and tools your project depends on. When you specify a dependency in your build script, 
+Gradle searches these repositories to download and include them in your project. For modern Android development, including both google() and mavenCentral() covers a wide range of commonly used dependencies.
 
 
 
